@@ -148,7 +148,7 @@ public class Seguridad {
 	 * @param cert el cerfificado a verificar
 	 * @return si es o no valido
 	 */
-	public boolean verificarCertificado(X509Certificate cert) {
+	public static boolean verificarCertificado(X509Certificate cert) {
 
 		Date after = cert.getNotAfter();
 		Date before = cert.getNotBefore();
