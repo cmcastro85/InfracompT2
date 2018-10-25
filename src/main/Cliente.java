@@ -87,14 +87,45 @@ public class Cliente {
 				sc.close();
 			}
 			pw.println("OK");
-			//ETAPA 4
+			//LLAVE SIMETRICA
 			lectura = bf.readLine();
 			byte[] simByEnc = new byte['?'];
 			simByEnc = cl.toByteArray(lectura);
-			byte[] simB = Seguridad.desencriptarSimetrico(simByEnc, certificadoS.getPublicKey(), a2);
+			byte[] simB = Seguridad.desencriptarAsimetrico(simByEnc, cl.key.getPrivate(), a2);
 			SecretKey sim = new SecretKeySpec(simB, a1);
 			
+			byte[] simBE2 = Seguridad.encriptarAsimetrico(sim.getEncoded(), certificadoS.getPublicKey(), a2);
+			pw.println(cl.toHexString(simBE2));
 			
+			lectura = bf.readLine();
+			if(lectura != "OK") {
+				pw.println("ERROR");
+				sc.close();
+			}
+			//VERIFICACION DE CUENTA
+			boolean pazysalvo = false;
+			
+			while(!pazysalvo) {
+				int cuentaI = cl.numeroCuenta();
+				String cuenta = cuentaI +"";
+				byte[] cuentaCifrada = Seguridad.encriptarSimetrico(cl.toByteArray(cuenta), sim, a1);
+				pw.println(cl.toHexString(cuentaCifrada));
+				
+				byte[] hmac = Seguridad.mac(cl.toByteArray(cuenta), sim, a3);
+				pw.println(cl.toHexString(hmac));
+				
+				lectura = bf.readLine();
+				if(lectura.equals("OK:DEBE")) {
+					pazysalvo = false;
+				}
+				if(lectura.equals("OK:PAZYSALVO")) {
+					pazysalvo = true;
+				}
+				else {
+					pw.println("ERROR");
+					sc.close();
+				}
+			}
 			//Final
 			sc.close();
 			sn.close();
@@ -111,6 +142,10 @@ public class Cliente {
 
 	private byte[] toByteArray(String s) {
 		return DatatypeConverter.parseHexBinary(s);
+	}
+	
+	private int numeroCuenta() {
+		return (int) (Math.random() * (1000 - 100)) + 100;
 	}
 	
 }
