@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
@@ -39,10 +40,13 @@ public class Cliente {
 	}
 	
 	public static void main(String[] args) {
-		Socket sc = new Socket();
-		Cliente cl = new Cliente();
+		
 		
 		try {
+			ServerSocket ss = new ServerSocket(9090);
+			Socket sc = ss.accept();
+			Cliente cl = new Cliente();
+			
 			//Iniciación
 			PrintWriter pw = new PrintWriter(sc.getOutputStream(), true);
 			BufferedReader bf = new BufferedReader(new InputStreamReader(sc.getInputStream()));
@@ -55,8 +59,10 @@ public class Cliente {
 			if(lectura != "OK") {
 				pw.println("ERROR");
 				sc.close();
+				ss.close();
 			}
 			//ALGS
+			System.out.println("¿Que algoritmos desea usar ?");
 			String a1 = sn.nextLine();
 			String a2 = sn.nextLine();
 			String a3 = sn.nextLine();
@@ -66,6 +72,7 @@ public class Cliente {
 			if(lectura != "OK") {
 				pw.println("ERROR");
 				sc.close();
+				ss.close();
 			}
 			//CERTIFICADOS
 			pw.println(cl.toHexString(cl.certif));
@@ -74,6 +81,7 @@ public class Cliente {
 			if(lectura != "OK") {
 				pw.println("ERROR");
 				sc.close();
+				ss.close();
 			}
 			
 			lectura = bf.readLine();
@@ -85,6 +93,7 @@ public class Cliente {
 			if(!Seguridad.verificarCertificado(certificadoS)) {
 				pw.println("ERROR");
 				sc.close();
+				ss.close();
 			}
 			pw.println("OK");
 			//LLAVE SIMETRICA
@@ -101,6 +110,7 @@ public class Cliente {
 			if(lectura != "OK") {
 				pw.println("ERROR");
 				sc.close();
+				ss.close();
 			}
 			//VERIFICACION DE CUENTA
 			boolean pazysalvo = false;
@@ -124,6 +134,7 @@ public class Cliente {
 				else {
 					pw.println("ERROR");
 					sc.close();
+					ss.close();
 				}
 			}
 			//Final
@@ -131,6 +142,7 @@ public class Cliente {
 			sn.close();
 			pw.close();
 			bf.close();
+			ss.close();
 		} catch (IOException | CertificateException | InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
 			e.printStackTrace();
 		}
