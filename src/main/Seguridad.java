@@ -54,7 +54,9 @@ public class Seguridad {
 
 	public static byte[] encriptarSimetrico(byte[] msg, Key key, String algo) throws InvalidKeyException,
 			NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
-		algo = algo + "/ECB/PKCS5Padding";
+		if(algo.equals("RSA") || algo.equals("DES")){
+			algo = algo + "/ECB/PKCS5Padding";
+		}
 		Cipher cipher = Cipher.getInstance(algo);
 		cipher.init(1, key);
 		return cipher.doFinal(msg);
