@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
@@ -43,8 +46,12 @@ public class Cliente {
 		
 		
 		try {
-			ServerSocket ss = new ServerSocket(9090);
-			Socket sc = ss.accept();
+			InetAddress addr = InetAddress.getByName("localhost");
+		    int port = 9090;
+		    SocketAddress sockaddr = new InetSocketAddress(addr, port);
+			Socket sc = new Socket();
+			
+			sc.connect(sockaddr);
 			Cliente cl = new Cliente();
 			
 			//Iniciación
@@ -52,14 +59,15 @@ public class Cliente {
 			BufferedReader bf = new BufferedReader(new InputStreamReader(sc.getInputStream()));
 			Scanner sn = new Scanner(System.in);
 			
+			System.out.println("Comienza la conexion");
 			//HOLA
 			String consola;
 			pw.print("HOLA");
 			String lectura = bf.readLine();
+			System.out.println("Esperando...");
 			if(lectura != "OK") {
 				pw.println("ERROR");
 				sc.close();
-				ss.close();
 			}
 			//ALGS
 			System.out.println("¿Que algoritmos desea usar ?");
@@ -72,7 +80,6 @@ public class Cliente {
 			if(lectura != "OK") {
 				pw.println("ERROR");
 				sc.close();
-				ss.close();
 			}
 			//CERTIFICADOS
 			pw.println(cl.toHexString(cl.certif));
@@ -81,7 +88,6 @@ public class Cliente {
 			if(lectura != "OK") {
 				pw.println("ERROR");
 				sc.close();
-				ss.close();
 			}
 			
 			lectura = bf.readLine();
@@ -93,7 +99,6 @@ public class Cliente {
 			if(!Seguridad.verificarCertificado(certificadoS)) {
 				pw.println("ERROR");
 				sc.close();
-				ss.close();
 			}
 			pw.println("OK");
 			//LLAVE SIMETRICA
@@ -110,7 +115,6 @@ public class Cliente {
 			if(lectura != "OK") {
 				pw.println("ERROR");
 				sc.close();
-				ss.close();
 			}
 			//VERIFICACION DE CUENTA
 			boolean pazysalvo = false;
@@ -134,7 +138,6 @@ public class Cliente {
 				else {
 					pw.println("ERROR");
 					sc.close();
-					ss.close();
 				}
 			}
 			//Final
@@ -142,7 +145,6 @@ public class Cliente {
 			sn.close();
 			pw.close();
 			bf.close();
-			ss.close();
 		} catch (IOException | CertificateException | InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
 			e.printStackTrace();
 		}
