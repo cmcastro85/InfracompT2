@@ -62,10 +62,11 @@ public class Cliente {
 			System.out.println("Comienza la conexion");
 			//HOLA
 			String consola;
-			pw.print("HOLA");
+			
+			pw.println("HOLA");
 			String lectura = bf.readLine();
-			System.out.println("Esperando...");
-			if(lectura != "OK") {
+			if(!lectura.equals("OK")) {
+				System.out.println("Recibio " + lectura);
 				pw.println("ERROR");
 				sc.close();
 			}
@@ -74,18 +75,22 @@ public class Cliente {
 			String a1 = sn.nextLine();
 			String a2 = sn.nextLine();
 			String a3 = sn.nextLine();
-			consola = "ALGORITMOS:" + ":" + a1 + ":" +a2 + ":" +a3;
+			consola = "ALGORITMOS" + ":" + a1 + ":" +a2 + ":" +a3;
 			pw.println(consola);
+			System.out.println(consola);
 			lectura = bf.readLine();
-			if(lectura != "OK") {
+			if(!lectura.equals("OK")) {
+				System.out.println("Recibio " + lectura);
 				pw.println("ERROR");
 				sc.close();
 			}
+			System.out.println("Algoritmos OK");
 			//CERTIFICADOS
 			pw.println(cl.toHexString(cl.certif));
 			
 			lectura = bf.readLine();
-			if(lectura != "OK") {
+			if(!lectura.equals("OK")) {
+				System.out.println("Recibio " + lectura);
 				pw.println("ERROR");
 				sc.close();
 			}
@@ -97,10 +102,12 @@ public class Cliente {
 			InputStream in = new ByteArrayInputStream(certfBytes);
 			X509Certificate certificadoS = (X509Certificate) factory.generateCertificate(in);
 			if(!Seguridad.verificarCertificado(certificadoS)) {
+				System.out.println("Recibio " + lectura);
 				pw.println("ERROR");
 				sc.close();
 			}
 			pw.println("OK");
+			System.out.println("Certificados OK");
 			//LLAVE SIMETRICA
 			lectura = bf.readLine();
 			byte[] simByEnc = new byte['?'];
@@ -112,10 +119,12 @@ public class Cliente {
 			pw.println(cl.toHexString(simBE2));
 			
 			lectura = bf.readLine();
-			if(lectura != "OK") {
+			if(!lectura.equals("OK")) {
+				System.out.println("Recibio " + lectura);
 				pw.println("ERROR");
 				sc.close();
 			}
+			System.out.println("Llave OK");
 			//VERIFICACION DE CUENTA
 			boolean pazysalvo = false;
 			
@@ -136,10 +145,12 @@ public class Cliente {
 					pazysalvo = true;
 				}
 				else {
+					System.out.println("Recibio " + lectura);
 					pw.println("ERROR");
 					sc.close();
 				}
 			}
+			System.out.println("Final OK");
 			//Final
 			sc.close();
 			sn.close();
