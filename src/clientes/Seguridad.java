@@ -1,4 +1,4 @@
-package main;
+package clientes;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
