@@ -18,9 +18,9 @@ public class MainGLoadTester extends Thread{
 	
 	public static void main(String[] args) {
 		
-		probar(400,20,10,1);
-		probar(200,40,10,1);
-		probar(80,100,10,1);
+		probar(400,20,10,8);
+		probar(200,40,10,8);
+		probar(80,100,10,8);
 		System.exit(0);
 	}
 	
