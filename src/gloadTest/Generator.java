@@ -44,6 +44,7 @@ public class Generator {
 		Task work = createTask();
 
 		File f = new File(rutaCSV);
+		System.out.println(rutaCSV);
 		if(!f.exists()) f.createNewFile();
 		PrintWriter pw = new PrintWriter(f);
 		this.pw = pw;
@@ -76,7 +77,7 @@ public class Generator {
 			if(ended == numTasks) {
 				pw.println("Numero de fallos: " + fails);
 				pw.close();
-				System.out.println("EEEEEEEEEEEEEEEEENDDDDDDD");
+				System.out.println("End Test");
 				ready = true;
 			}
 		}
@@ -87,7 +88,7 @@ public class Generator {
 	}
 
 	public synchronized void printTime(String time) {
-		System.out.println("print: " + time);
+		//System.out.println("print: " + time);
 		pw.println(time);
 		pw.flush();
 	}
