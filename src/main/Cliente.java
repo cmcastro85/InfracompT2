@@ -45,8 +45,10 @@ public class Cliente {
 	public static void main(String[] args) {
 
 		try {
+			Scanner sn = new Scanner(System.in);
 			InetAddress addr = InetAddress.getByName("localhost");
-			int port = 9090;
+			System.out.println("Iniciando Cliente sin seguridad\nIngrese el puerto del servidor: ");
+			int port = Integer.parseInt(sn.nextLine());
 			SocketAddress sockaddr = new InetSocketAddress(addr, port);
 			Socket sc = new Socket();
 
@@ -56,7 +58,7 @@ public class Cliente {
 			// Iniciación
 			PrintWriter pw = new PrintWriter(sc.getOutputStream(), true);
 			BufferedReader bf = new BufferedReader(new InputStreamReader(sc.getInputStream()));
-			Scanner sn = new Scanner(System.in);
+			
 
 			System.out.println("Comienza la conexion");
 			// HOLA
