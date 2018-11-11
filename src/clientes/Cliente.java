@@ -10,7 +10,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.net.UnknownHostException;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
@@ -307,9 +306,9 @@ public class Cliente {
 
 			lectura = bf.readLine();
 			if (lectura.equals("OK:DEBE")) {
-				System.out.println("Debe");
+				//System.out.println("Debe");
 			} else if (lectura.equals("OK:PAZYSALVO")) {
-				System.out.println("Paz y salvo");
+				//System.out.println("Paz y salvo");
 			} else {
 				System.out.println("Recibio " + lectura);
 				pw.println("ERROR");

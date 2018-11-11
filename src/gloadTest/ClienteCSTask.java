@@ -26,12 +26,13 @@ public class ClienteCSTask extends Task {
 		try {
 			cl.comenzarTransaccion(ip, id, puerto, a1, a2, a3);
 			String temp = id + "," + cl.getVerDuration() + "," + cl.getConsultaDuration();
-			tiempos.add(temp);
+			gen.printTime(temp);
 			success();
 			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			gen.printTime(null);
 			fail();
 			
 		}

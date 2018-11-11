@@ -11,9 +11,9 @@ import uniandes.gload.core.Task;
 public class Generator {
 
 	
-	public static String IP = "localhost";
+	public static String IP = "172.24.41.149";
 	
-	public static int puerto = 8081;
+	public static int puerto = 8085;
 	
 	public static String a1 = "AES";
 	
@@ -27,6 +27,7 @@ public class Generator {
 	
 	private int gapTasks;
 	
+	private PrintWriter pw;
 	/**
 	 * Tiempos, se guardan de la forma <id>,<tiempoVerificacion>,<tiempoConsulta>
 	 */
@@ -34,6 +35,7 @@ public class Generator {
 	
 	public Generator(int tasks, int gap, String rutaCSV, int threads) throws IOException, InterruptedException {
 		
+		ended = 0;
 		System.out.println("Iniciando prueba de carga a " + IP + ":" + puerto + 
 				"\nEl server tiene " + threads + " threads en el pool");
 		tiempos = new ArrayList<>();
@@ -43,24 +45,41 @@ public class Generator {
 		
 		Task work = createTask();
 		
-		generator = new LoadGenerator("Cliente Servidor Load Test", numTasks, work, gapTasks);
-		generator.generate();
-		System.out.println("\n\n\n\n\n\n\nAfterGenerate\n\n\n\nn\nn\n\nn\nn\n\nn\n");
-		
 		File f = new File(rutaCSV);
 		if(!f.exists()) f.createNewFile();
 		PrintWriter pw = new PrintWriter(f);
+		this.pw = pw;
 		pw.println("Tasks: " + tasks);
 		pw.println("Gap: " + gapTasks);
 		pw.println("Threads: " + threads);
-		for(String s: tiempos) {
-			pw.println(s);
-		}
-		pw.println("Numero de fallos: " + fails);
 		
-		pw.close();
+		generator = new LoadGenerator("Cliente Servidor Load Test", numTasks, work, gapTasks);
+		generator.generate();
+
+		
+		
+		
+		//
+		
 	}
 	
+	private int ended;
+	
+	public void end() {
+		ended++;
+		if(ended == numTasks) {
+			pw.println("Numero de fallos: " + fails);
+			pw.close();
+			System.out.println("EEEEEEEEEEEEEEEEENDDDDDDD");
+			System.exit(0);
+		}
+	}
+	
+	public synchronized void printTime(String time) {
+		System.out.println("print: " + time);
+		pw.println(time);
+		pw.flush();
+	}
 	
 	private Task createTask() {
 		return new ClienteCSTask(IP, puerto, 0, a1, a2, a3, tiempos, this);
@@ -69,7 +88,7 @@ public class Generator {
 	public static void main(String[] args) {
 		try {
 			@SuppressWarnings("unused")
-			Generator gen = new Generator(10, 1000, "./data/testCSV.csv", 2);
+			Generator gen = new Generator(100, 50, "./data/testCSV.csv", 2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
