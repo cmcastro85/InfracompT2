@@ -3,14 +3,15 @@ package gloadTest;
 import clientes.Cliente;
 import uniandes.gload.core.Task;
 
-public class ClienteCSTask extends Task {
+public class ClienteCSTask extends Task{
 
 	@Override
 	public void fail() {
 		// TODO Auto-generated method stub
 		gen.fail();
+		gen.end();
 		System.out.println(Task.MENSAJE_FAIL);
-		}
+	}
 
 	@Override
 	public void success() {
@@ -23,37 +24,37 @@ public class ClienteCSTask extends Task {
 		Cliente cl = new Cliente();
 		try {
 			cl.comenzarTransaccion(ip, id, puerto, a1, a2, a3);
-			String temp = id + "," + cl.getVerDuration() + "," + cl.getConsultaDuration();
+			String temp = cl.getVerDuration() + "," + cl.getConsultaDuration();
 			gen.printTime(temp);
 			gen.end();
 			success();
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			gen.printTime(null);
-			gen.end();
 			fail();
-			
-			
+
+
+
 		}
-		
+
 	}
-	
+
 	String a1;
 	String a2;
 	String a3;
-	
+
 	String ip;
-	
+
 	int puerto;
-	
+
 	int id;
-	
-	
+
+
 	Generator gen;
-	
+
 	public ClienteCSTask(String ip, int puerto, int id, String algo1, String algo2, String algo3, Generator gen) {
+
 		a1 = algo1;
 		a2 = algo2;
 		a3 = algo3;

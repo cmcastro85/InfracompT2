@@ -48,7 +48,7 @@ public class Cliente {
 		try {
 			Scanner sn = new Scanner(System.in);
 			InetAddress addr = InetAddress.getByName("localhost");
-			System.out.println("Iniciando Cliente sin seguridad\nIngrese el puerto del servidor: ");
+			System.out.println("Iniciando Cliente con seguridad\nIngrese el puerto del servidor: ");
 			int port = Integer.parseInt(sn.nextLine());
 			SocketAddress sockaddr = new InetSocketAddress(addr, port);
 			Socket sc = new Socket();
@@ -103,11 +103,6 @@ public class Cliente {
 			CertificateFactory factory = CertificateFactory.getInstance("X.509");
 			InputStream in = new ByteArrayInputStream(certfBytes);
 			X509Certificate certificadoS = (X509Certificate) factory.generateCertificate(in);
-			if (!Seguridad.verificarCertificado(certificadoS)) {
-				System.out.println("Recibio " + lectura);
-				pw.println("ERROR");
-				sc.close();
-			}
 			pw.println("OK");
 			System.out.println("Certificados OK");
 			// LLAVE SIMETRICA
@@ -260,12 +255,6 @@ public class Cliente {
 			CertificateFactory factory = CertificateFactory.getInstance("X.509");
 			InputStream in = new ByteArrayInputStream(certfBytes);
 			X509Certificate certificadoS = (X509Certificate) factory.generateCertificate(in);
-			if (!Seguridad.verificarCertificado(certificadoS)) {
-				System.out.println("Recibio " + lectura);
-				pw.println("ERROR");
-				sc.close();
-				throw new Exception("ERROR");
-			}
 			pw.println("OK");
 			//System.out.println("Certificados OK");
 			
@@ -338,7 +327,7 @@ public class Cliente {
 	 * @return
 	 */
 	public long getVerDuration() {
-		return (endVer-startVer)/1000000;
+		return (endVer-startVer);
 	}
 	
 	/**

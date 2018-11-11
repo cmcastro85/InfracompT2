@@ -77,9 +77,9 @@ public class Coordinador {
 
 
 		//Crea el pool
-
-		int numT = 2;
-
+		System.out.println("Ingrese el tamaño del pool");
+		int numT = Integer.parseInt(br.readLine());
+		
 		ExecutorService exec = Executors.newFixedThreadPool(numT);
 
 		System.out.println(MAESTRO + "Creado pool de tamanio "+ numT);
@@ -99,7 +99,8 @@ public class Coordinador {
 		System.out.println(MAESTRO + "Socket creado.");
 
 		while (true) {
-			System.out.println("CPU LOAD: " + getProcessCpuLoad());
+			double cpu = getProcessCpuLoad();
+			System.out.println("CPU LOAD: " + cpu);
 			try { 
 
 				Socket sc = ss.accept();
@@ -109,6 +110,7 @@ public class Coordinador {
 				//Delegado3 d3 = new Delegado3(sc,idThread);
 
 				exec.execute(new Delegado3(sc,idThread));
+				
 
 				idThread++;
 

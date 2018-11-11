@@ -143,19 +143,4 @@ public class Seguridad {
 		}
 	}
 
-	/**
-	 * Verifica la fecha del certificado
-	 * 
-	 * @param cert el cerfificado a verificar
-	 * @return si es o no valido
-	 */
-	public static boolean verificarCertificado(X509Certificate cert) {
-
-		Date after = cert.getNotAfter();
-		Date before = cert.getNotBefore();
-		Date actual = new Date(System.currentTimeMillis());
-
-		return actual.before(after) && actual.after(before);
-	}
-
 }
