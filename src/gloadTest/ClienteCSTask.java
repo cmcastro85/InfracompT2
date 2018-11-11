@@ -12,7 +12,7 @@ public class ClienteCSTask extends Task {
 		// TODO Auto-generated method stub
 		gen.fail();
 		System.out.println(Task.MENSAJE_FAIL);
-		}
+	}
 
 	@Override
 	public void success() {
@@ -28,31 +28,31 @@ public class ClienteCSTask extends Task {
 			String temp = id + "," + cl.getVerDuration() + "," + cl.getConsultaDuration();
 			tiempos.add(temp);
 			success();
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
-			
+
 		}
-		
+
 	}
-	
+
 	String a1;
 	String a2;
 	String a3;
-	
+
 	String ip;
-	
+
 	int puerto;
-	
+
 	int id;
-	
+
 	private ArrayList<String> tiempos;
-	
+
 	Generator gen;
-	
-	public ClienteCSTask(String ip, int puerto, int id, String algo1, String algo2, String algo3, ArrayList<String> tiempos, Generator gen) {
+
+	public ClienteCSTask(String ip, int puerto, int id, String algo1, String algo2, String algo3,
+			ArrayList<String> tiempos, Generator gen) {
 		a1 = algo1;
 		a2 = algo2;
 		a3 = algo3;
