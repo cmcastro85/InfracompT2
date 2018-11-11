@@ -1,7 +1,5 @@
 package gloadTest;
 
-import java.util.ArrayList;
-
 import clientes.Cliente;
 import uniandes.gload.core.Task;
 
@@ -27,13 +25,16 @@ public class ClienteCSTask extends Task {
 			cl.comenzarTransaccion(ip, id, puerto, a1, a2, a3);
 			String temp = id + "," + cl.getVerDuration() + "," + cl.getConsultaDuration();
 			gen.printTime(temp);
+			gen.end();
 			success();
 			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			gen.printTime(null);
+			gen.end();
 			fail();
+			
 			
 		}
 		
@@ -49,18 +50,16 @@ public class ClienteCSTask extends Task {
 	
 	int id;
 	
-	private ArrayList<String> tiempos;
 	
 	Generator gen;
 	
-	public ClienteCSTask(String ip, int puerto, int id, String algo1, String algo2, String algo3, ArrayList<String> tiempos, Generator gen) {
+	public ClienteCSTask(String ip, int puerto, int id, String algo1, String algo2, String algo3, Generator gen) {
 		a1 = algo1;
 		a2 = algo2;
 		a3 = algo3;
 		this.ip = ip;
 		this.puerto = puerto;
 		this.id = id;
-		this.tiempos = tiempos;
 		this.gen = gen;
 	}
 
