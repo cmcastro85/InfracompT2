@@ -1,6 +1,6 @@
-Tasks: 400
-Gap: 20
-Threads: 1
+Tasks: 400,
+Gap: 20,
+Threads: 2,
 Verificacion ns,Consulta ms
 44554,87
 38630,563
@@ -402,4 +402,4 @@ Verificacion ns,Consulta ms
 96006,4510
 90881,4357
 87045,4496
-Numero de fallos: 0
+Numero de fallos: 0,

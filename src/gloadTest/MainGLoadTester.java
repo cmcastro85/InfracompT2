@@ -18,9 +18,12 @@ public class MainGLoadTester extends Thread{
 	
 	public static void main(String[] args) {
 		
-		probar(400,20,10,8);
-		probar(200,40,10,8);
-		probar(80,100,10,8);
+		
+		probarSS(400,20,10,2);
+		probarSS(200,40,10,2);
+		probarSS(80,100,10,2);
+		
+		//probarSS(1,1,1,1);
 		System.exit(0);
 	}
 	
@@ -33,6 +36,27 @@ public class MainGLoadTester extends Thread{
 			if(!f.exists()) f.mkdirs();
 			try {
 				Generator gen = new Generator(test, gap, "./data/" + name, 1);
+				while(!gen.ready()) {
+					sleep(3000L);
+				}
+				System.out.println("\nEnd Prueba " + (i+1) + "\nEnd Prueba " + (i+1) + "\nEnd Prueba " + (i+1) + "\nEnd Prueba " + (i+1) + "\nEnd Prueba " + (i+1) + "\nEnd Prueba " + (i+1) + "\nEnd Prueba " + (i+1) + "\nEnd Prueba " + (i+1));
+			} catch (IOException | InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas"+"\nEnd Pruebas");
+	}
+	
+	public static void probarSS(int test, int gap, int loops, int threads) {
+		System.out.println("pruebas: \nt:" + test + "\ng:" + gap + "\nc:" + threads + "\nLoops: " + loops);
+		for(int i = 0; i < loops; i++) {
+			String name = "datosSSconT" + test + "G" + gap + "C" + threads + "/try"+i + ".csv";
+			String dir = "./data/datosSSconT" + test + "G" + gap + "C" + threads;
+			File f = new File(dir);
+			if(!f.exists()) f.mkdirs();
+			try {
+				GeneratorSS gen = new GeneratorSS(test, gap, "./data/" + name, threads);
 				while(!gen.ready()) {
 					sleep(3000L);
 				}

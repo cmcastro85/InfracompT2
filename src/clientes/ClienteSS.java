@@ -138,6 +138,123 @@ public class ClienteSS {
 	}
 
 
+	/**
+	 * retorna la duracion en MS de la verificacion
+	 * @return
+	 */
+	public long getVerDuration() {
+		return (endVer-startVer);
+	}
+	
+	/**
+	 * retorna la duracion en MS de la verificacion
+	 * @return
+	 */
+	public long getConsultaDuration() {
+		return (endConsulta-startConsulta)/1000000;
+	}
+	
+	private long startVer;
+	
+	private long endVer;
+	
+	private long startConsulta;
+	
+	private long endConsulta;
+
+	public void comenzarTransaccion(String ip, int id, int puerto, String a1, String a2, String a3) throws Exception {
+		//Scanner sn = new Scanner(System.in);
+		InetAddress addr = InetAddress.getByName(ip);
+		int port = puerto;
+		SocketAddress sockaddr = new InetSocketAddress(addr, port);
+		Socket sc = new Socket();
+
+		sc.connect(sockaddr);
+		ClienteSS cl = new ClienteSS();
+
+		//Iniciación
+		PrintWriter pw = new PrintWriter(sc.getOutputStream(), true);
+		BufferedReader bf = new BufferedReader(new InputStreamReader(sc.getInputStream()));
+
+
+		//System.out.println("Comienza la conexion");
+		//HOLA
+		String consola;
+
+		pw.println("HOLA");
+		String lectura = bf.readLine();
+		if(!lectura.equals("OK")) {
+			System.out.println("Recibio " + lectura);
+			pw.println("ERROR");
+			sc.close();
+			throw new Exception("ERROR");
+		}
+		//ALGS
+		consola = "ALGORITMOS" + ":" + a1 + ":" +a2 + ":" +a3;
+		pw.println(consola);
+		//System.out.println(consola);
+		lectura = bf.readLine();
+		if(!lectura.equals("OK")) {
+			System.out.println("Recibio " + lectura);
+			pw.println("ERROR");
+			sc.close();
+			throw new Exception("ERROR");
+		}
+		//System.out.println("Algoritmos OK");
+		//CERTIFICADOS
+		pw.println(cl.toHexString(cl.certif));
+
+		lectura = bf.readLine();
+		if(!lectura.equals("OK")) {
+			System.out.println("Recibio " + lectura);
+			pw.println("ERROR");
+			sc.close();
+			throw new Exception("ERROR");
+		}
+
+		lectura = bf.readLine();
+		pw.println("OK");
+		//System.out.println("Certificados OK");
+		//LLAVE SIMETRICA
+		lectura = bf.readLine();
+		pw.println("LS");
+
+		lectura = bf.readLine();
+		if(!lectura.equals("OK")) {
+			System.out.println("Recibio " + lectura);
+			pw.println("ERROR");
+			sc.close();
+			throw new Exception("ERROR");
+		}
+		//System.out.println("Llave OK");
+		//VERIFICACION DE CUENTA
+
+		//System.out.println("asdf");
+		int cuentaI = cl.numeroCuenta();
+		String cuenta = cuentaI +"";
+		pw.println(cuenta);
+		pw.println(cuenta);
+
+		lectura = bf.readLine();
+		if(lectura.equals("OK:DEBE")) {
+			System.out.println("Debe");
+		}
+		else if(lectura.equals("OK:PAZYSALVO")) {
+			System.out.println("Paz y Salvo");
+		}
+		else {
+			System.out.println("Recibio " + lectura);
+			pw.println("ERROR");
+			sc.close();
+			throw new Exception("ERROR");
+		}
+		System.out.println("Final OK");
+		//Final
+		sc.close();
+		pw.close();
+		bf.close();
+	}
+	
 
 }
 
