@@ -180,8 +180,15 @@ public class ClienteSS {
 		//System.out.println("Comienza la conexion");
 		//HOLA
 		String consola;
-
+		
+		
 		pw.println("HOLA");
+		//------------------------------------
+		//START CONSULTA
+		//------------------------------------
+		startConsulta = System.nanoTime();
+		
+		
 		String lectura = bf.readLine();
 		if(!lectura.equals("OK")) {
 			System.out.println("Recibio " + lectura);
@@ -217,6 +224,11 @@ public class ClienteSS {
 		//System.out.println("Certificados OK");
 		//LLAVE SIMETRICA
 		lectura = bf.readLine();
+		//------------------------------------
+		//START VERIFICACION
+		//------------------------------------
+		
+		startVer = System.nanoTime();
 		pw.println("LS");
 
 		lectura = bf.readLine();
@@ -226,6 +238,13 @@ public class ClienteSS {
 			sc.close();
 			throw new Exception("ERROR");
 		}
+		//------------------------------------
+		//END VERIFICACION
+		//------------------------------------
+		
+		
+		endVer = System.nanoTime();
+		
 		//System.out.println("Llave OK");
 		//VERIFICACION DE CUENTA
 
@@ -248,6 +267,13 @@ public class ClienteSS {
 			sc.close();
 			throw new Exception("ERROR");
 		}
+		
+		//------------------------------------
+		//END CONSULTA
+		//------------------------------------
+		endConsulta = System.nanoTime();
+		
+		
 		System.out.println("Final OK");
 		//Final
 		sc.close();

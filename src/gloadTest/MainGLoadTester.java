@@ -19,9 +19,9 @@ public class MainGLoadTester extends Thread{
 	public static void main(String[] args) {
 		
 		
-		probarSS(400,20,10,2);
-		probarSS(200,40,10,2);
-		probarSS(80,100,10,2);
+		probarSS(400,20,10,8);
+		probarSS(200,40,10,8);
+		probarSS(80,100,10,8);
 		
 		//probarSS(1,1,1,1);
 		System.exit(0);
@@ -35,7 +35,7 @@ public class MainGLoadTester extends Thread{
 			File f = new File(dir);
 			if(!f.exists()) f.mkdirs();
 			try {
-				Generator gen = new Generator(test, gap, "./data/" + name, 1);
+				Generator gen = new Generator(test, gap, "./data/" + name, threads);
 				while(!gen.ready()) {
 					sleep(3000L);
 				}
