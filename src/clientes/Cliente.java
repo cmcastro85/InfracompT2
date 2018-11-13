@@ -259,12 +259,7 @@ public class Cliente {
 			//System.out.println("Certificados OK");
 			
 			
-			//------------------------------------
-			//END VERIFICACION
-			//------------------------------------
 			
-			
-			endVer = System.nanoTime();
 			// LLAVE SIMETRICA
 			lectura = bf.readLine();
 			byte[] simByEnc = new byte['?'];
@@ -283,6 +278,13 @@ public class Cliente {
 				throw new Exception("ERROR");
 			}
 			//System.out.println("Llave OK");
+			
+			//------------------------------------
+			//END VERIFICACION
+			//------------------------------------
+			
+			
+			endVer = System.nanoTime();
 			// VERIFICACION DE CUENTA
 
 			int cuentaI = cl.numeroCuenta();

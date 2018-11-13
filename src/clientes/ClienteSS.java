@@ -145,7 +145,7 @@ public class ClienteSS {
 	public long getVerDuration() {
 		return (endVer-startVer);
 	}
-	
+
 	/**
 	 * retorna la duracion en MS de la verificacion
 	 * @return
@@ -153,13 +153,13 @@ public class ClienteSS {
 	public long getConsultaDuration() {
 		return (endConsulta-startConsulta)/1000000;
 	}
-	
+
 	private long startVer;
-	
+
 	private long endVer;
-	
+
 	private long startConsulta;
-	
+
 	private long endConsulta;
 
 	public void comenzarTransaccion(String ip, int id, int puerto, String a1, String a2, String a3) throws Exception {
@@ -180,15 +180,15 @@ public class ClienteSS {
 		//System.out.println("Comienza la conexion");
 		//HOLA
 		String consola;
-		
-		
+
+
 		pw.println("HOLA");
 		//------------------------------------
 		//START CONSULTA
 		//------------------------------------
 		startConsulta = System.nanoTime();
-		
-		
+
+
 		String lectura = bf.readLine();
 		if(!lectura.equals("OK")) {
 			System.out.println("Recibio " + lectura);
@@ -218,17 +218,19 @@ public class ClienteSS {
 			sc.close();
 			throw new Exception("ERROR");
 		}
+		//------------------------------------
+		//START VERIFICACION
+		//------------------------------------
+
+		startVer = System.nanoTime();
 
 		lectura = bf.readLine();
 		pw.println("OK");
 		//System.out.println("Certificados OK");
+
 		//LLAVE SIMETRICA
 		lectura = bf.readLine();
-		//------------------------------------
-		//START VERIFICACION
-		//------------------------------------
-		
-		startVer = System.nanoTime();
+
 		pw.println("LS");
 
 		lectura = bf.readLine();
@@ -241,10 +243,10 @@ public class ClienteSS {
 		//------------------------------------
 		//END VERIFICACION
 		//------------------------------------
-		
-		
+
+
 		endVer = System.nanoTime();
-		
+
 		//System.out.println("Llave OK");
 		//VERIFICACION DE CUENTA
 
@@ -267,20 +269,20 @@ public class ClienteSS {
 			sc.close();
 			throw new Exception("ERROR");
 		}
-		
+
 		//------------------------------------
 		//END CONSULTA
 		//------------------------------------
 		endConsulta = System.nanoTime();
-		
-		
+
+
 		System.out.println("Final OK");
 		//Final
 		sc.close();
 		pw.close();
 		bf.close();
 	}
-	
+
 
 }
 
